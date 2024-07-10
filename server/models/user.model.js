@@ -9,8 +9,6 @@ const userSchema = new mongoose.Schema(
         lastName: { type: String, required: true },
         dob: { type: Date, required: true },
         gender: { type: String, required: true },
-        address: { type: String, required: true },
-        phone: { type: String, required: true },
     },
     { timestamps: true }
 );
