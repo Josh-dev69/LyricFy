@@ -4,9 +4,10 @@ import About from "./pages/About";
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Search from "./pages/Search";
 import Header from "./components/Header";
-import FooterComp from "./components/FooterComp";
+import FooterCom from "./components/FooterCom";
+import './styles.css'
+import Search from "./pages/SearchPage";
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/search" element={<Search />} />
       </Routes>
-      <FooterComp />
+      <FooterCom />
     </BrowserRouter>
   )
 }

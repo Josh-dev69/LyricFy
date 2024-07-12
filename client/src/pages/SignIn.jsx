@@ -43,7 +43,7 @@ const SignIn = () => {
                 
             <Button gradientDuoTone="purpleToPink" type="submit">Submit</Button>
             <div className="flex flex-row gap-2 text-center justify-center mt-3">
-              <p className="text-sm text-slate-900">Don't Have An Account?</p>
+              <p className="text-sm text-slate-900">Not Registered?</p>
                 <Link to='/sign-up' className="text-sm text-blue-500 font-bold">Sign Up</Link>
             </div>
           </form>
