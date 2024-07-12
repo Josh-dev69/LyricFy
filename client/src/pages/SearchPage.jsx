@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Navbar, Footer, TextInput, Button, Card } from 'flowbite-react';
+import React from 'react';
 import SearchCom from '../components/SearchCom';
 
-const Search = () => {
+const SearchPage = () => {
   return (
     <SearchCom />    
   );
 };
 
-export default Search;
+export default SearchPage;

@@ -1,5 +1,6 @@
 import { Button, Card, TextInput } from 'flowbite-react'
 import React from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 const SearchCom = () => {
     
@@ -16,8 +17,8 @@ const SearchCom = () => {
                         placeholder="Search for lyrics..."
                         className="w-full"
                     />
-                    <Button gradientMonochrome="info">
-                        Search
+                    <Button gradientDuoTone="purpleToBlue" outline pill>
+                        <AiOutlineSearch />
                     </Button>
                 </div>
             </div>
