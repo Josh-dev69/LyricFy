@@ -1,20 +1,19 @@
-const mongoose = require('mongoose');
-const express = require('express')
-const dotenv = require('dotenv');
-const routes = require('./routes/routes');
+const mongoose = require("mongoose");
+const express = require("express");
+const dotenv = require("dotenv");
+const authRoutes = require("./routes/auth.route");
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO)
-  .then(() => console.log('Connected!'))
-  .catch(err => console.log(err));
-  
+mongoose
+  .connect(process.env.MONGO)
+  .then(() => console.log("Database Connected!"))
+  .catch((err) => console.log(err));
 
-const app = express()
+const app = express();
+app.use(express.json());
 
-
-app.use('/', routes);
-
+app.use("/api/auth", authRoutes);
 app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+  console.log("Server is running on port 3000");
 });
