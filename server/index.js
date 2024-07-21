@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth.route");
 const cors = require("cors");
 
@@ -15,10 +16,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 // MONGODB Connection
-mongoose
-  .connect(process.env.MONGO)
-  .then(() => console.log("Database Connected!"))
-  .catch((err) => console.error("Failed to Connect to Database", err));
+connectDB();
 
 // Global Error Handler
 app.use((err, req, res, next) => {
@@ -32,6 +30,6 @@ app.use((err, req, res, next) => {
 });
 
 // SERVER
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server is running on port 3000");
 });

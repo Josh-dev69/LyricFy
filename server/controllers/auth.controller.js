@@ -45,6 +45,12 @@ exports.signup = async (req, res, next) => {
       status: "success",
       message: "User registered successfully",
       token,
+      user: {
+        _id: newUser._id,
+        name: newUser.firstName + " " + newUser.lastName,
+        email: newUser.email,
+        username: newUser.username,
+      },
     });
   } catch (error) {
     next(error);
@@ -74,14 +80,24 @@ exports.signin = async (req, res, next) => {
     }
 
     // Generate a JWT token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "90d",
-    });
+    const token = jwt.sign(
+      { username: user.username },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "90d",
+      }
+    );
 
     res.status(200).json({
       status: "success",
       message: "User logged in successfully",
       token,
+      user: {
+        _id: user._id,
+        name: user.firstName + " " + user.lastName,
+        email: user.email,
+        username: user.username,
+      },
     });
   } catch (error) {
     next(error);
