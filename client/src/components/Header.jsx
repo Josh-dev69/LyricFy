@@ -1,4 +1,3 @@
-// src/components/Header.js
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { FaMoon, FaUserCircle } from "react-icons/fa";
@@ -8,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 
 const Header = () => {
-  const { user } = useUser(); // Get the user from context
+  const { user } = useUser();
   const path = useLocation().pathname;
   const isDashboard = path === "/dashboard";
 
@@ -81,12 +80,16 @@ const Header = () => {
                 {user.email}
               </span>
             </Dropdown.Header>
-            <Dropdown.Item className="font-bold">
-              <span className="pr-2 text-green-700">
-                <FaUserCircle />
-              </span>{" "}
-              <Link to="/dashboard?tab=profile">Profile</Link>
-            </Dropdown.Item>
+            <Link to="/dashboard?tab=profile">
+              <Dropdown.Item
+                active={tab === "profile"}
+                icon={FaUserCircle}
+                labelColor="dark"
+                as="div"
+              >
+                Profile
+              </Dropdown.Item>
+            </Link>
 
             <Link to="/dashboard?tab=views">
               <Dropdown.Item
@@ -136,15 +139,6 @@ const Header = () => {
             </Link>
             <Navbar.Toggle />
           </div>
-
-          <Navbar.Collapse>
-            <Navbar.Link active={path === "/"} as={"div"}>
-              <Link to="/">Home</Link>
-            </Navbar.Link>
-            <Navbar.Link active={path === "/about"} as={"div"}>
-              <Link to="/about">About</Link>
-            </Navbar.Link>
-          </Navbar.Collapse>
         </>
       )}
     </Navbar>
