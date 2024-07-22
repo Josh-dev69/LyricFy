@@ -1,7 +1,7 @@
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { FaMoon, FaUserCircle } from "react-icons/fa";
-import { HiDocumentSearch, HiUser, HiViewBoards } from "react-icons/hi";
+import { HiDocumentSearch, HiViewBoards } from "react-icons/hi";
 import { useEffect, useState } from "react";
 
 const Header = () => {
@@ -10,6 +10,7 @@ const Header = () => {
 
   const location = useLocation();
   const [tab, setTab] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const urlParam = new URLSearchParams(location.search);
@@ -18,6 +19,27 @@ const Header = () => {
       setTab(tabFromUrl);
     }
   }, [location.search]);
+
+  useEffect(() => {
+    const darkModePref = localStorage.getItem("darkMode");
+    if (darkModePref === "true") {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark");
+      document.body.classList.add("dark");
+    } else {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark");
+      document.body.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    document.documentElement.classList.toggle("dark", newDarkMode);
+    document.body.classList.toggle("dark", newDarkMode);
+    localStorage.setItem("darkMode", newDarkMode.toString());
+  };
 
   return (
     <Navbar className="border-b-2 fixed top-0 left-0 right-0 z-50 ">
@@ -32,8 +54,15 @@ const Header = () => {
 
       {isDashboard && (
         <div className="flex gap-2 md:order-2">
-          <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
-            <FaMoon />
+          <Button
+            className="w-12 h-10 hidden sm:inline"
+            color="gray"
+            pill
+            onClick={toggleDarkMode}
+          >
+            <FaMoon
+              className={darkMode ? "text-yellow-400" : "text-gray-800"}
+            />
           </Button>
           <Dropdown
             arrowIcon={false}
@@ -84,8 +113,15 @@ const Header = () => {
       {!isDashboard && (
         <>
           <div className="flex gap-2 md:order-2">
-            <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
-              <FaMoon />
+            <Button
+              className="w-12 h-10 hidden sm:inline"
+              color="gray"
+              pill
+              onClick={toggleDarkMode}
+            >
+              <FaMoon
+                className={darkMode ? "text-yellow-400" : "text-gray-800"}
+              />
             </Button>
             <Link to="/sign-in">
               <Button gradientDuoTone="purpleToBlue" outline>
