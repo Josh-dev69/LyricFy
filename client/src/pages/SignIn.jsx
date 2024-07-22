@@ -2,29 +2,37 @@ import { Button, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Axios } from "../constants/index";
+import { useUser } from "../context/UserContext";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { setUser } = useUser(); // Use the setUser function from context
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await Axios.post("/api/auth/signin", {
-      email,
-      password,
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          navigate("/dashboard");
-        } else {
-          navigate("/sign-in");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    setError(""); // Clear any previous error
+    try {
+      const response = await Axios.post("/api/auth/signin", {
+        email,
+        password,
       });
+      if (response.status === 200) {
+        setUser(response.data.user); // Set the user data in context
+        localStorage.setItem("token", response.data.token); // Store the token if needed
+        navigate("/dashboard");
+      } else {
+        setError("Failed to sign in. Please try again.");
+      }
+    } catch (err) {
+      console.log(err);
+      setError(
+        err.response?.data?.msg || "Failed to sign in. Please try again."
+      );
+    }
   };
 
   return (
@@ -85,12 +93,14 @@ const SignIn = () => {
               />
             </div>
 
+            {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+
             <Button gradientDuoTone="purpleToPink" type="submit">
               Sign In
             </Button>
             <div className="flex flex-row gap-2 text-center justify-center mt-3">
               <p className="text-sm text-gray-900 dark:text-gray-100">
-                Already Have An Account?
+                Don't Have An Account?
               </p>
               <Link
                 to="/sign-up"

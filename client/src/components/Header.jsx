@@ -1,10 +1,14 @@
+// src/components/Header.js
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { FaMoon, FaUserCircle } from "react-icons/fa";
-import { HiDocumentSearch, HiViewBoards } from "react-icons/hi";
+import { HiViewBoards } from "react-icons/hi";
+import { TbMusicSearch } from "react-icons/tb";
 import { useEffect, useState } from "react";
+import { useUser } from "../context/UserContext";
 
 const Header = () => {
+  const { user } = useUser(); // Get the user from context
   const path = useLocation().pathname;
   const isDashboard = path === "/dashboard";
 
@@ -52,7 +56,7 @@ const Header = () => {
         </span>
       </Link>
 
-      {isDashboard && (
+      {isDashboard && user && (
         <div className="flex gap-2 md:order-2">
           <Button
             className="w-12 h-10 hidden sm:inline"
@@ -70,9 +74,11 @@ const Header = () => {
             label={<Avatar alt="User settings" rounded />}
           >
             <Dropdown.Header>
-              <span className="block text-sm">Ebube Joshua</span>
+              <span className="block text-sm">
+                {user.firstName} {user.lastName}
+              </span>
               <span className="block truncate text-sm font-medium">
-                ebubejoshua69@gmail.com
+                {user.email}
               </span>
             </Dropdown.Header>
             <Dropdown.Item className="font-bold">
@@ -96,7 +102,7 @@ const Header = () => {
             <Link to="/dashboard?tab=search">
               <Dropdown.Item
                 active={tab === "search"}
-                icon={HiDocumentSearch}
+                icon={TbMusicSearch}
                 labelColor="dark"
                 as="div"
               >

@@ -9,28 +9,32 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await Axios.post("/api/auth/signup", {
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          navigate("/sign-in");
-        } else {
-          navigate("/sign-up");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    setError(""); // Clear any previous error
+    try {
+      const response = await Axios.post("/api/auth/signup", {
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
       });
+      if (response.status === 201) {
+        navigate("/sign-in");
+      } else {
+        setError("Failed to sign up. Please try again.");
+      }
+    } catch (err) {
+      console.log(err);
+      setError(
+        err.response?.data?.msg || "Failed to sign up. Please try again."
+      );
+    }
   };
 
   return (
@@ -142,6 +146,8 @@ const SignUp = () => {
                 className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
               />
             </div>
+
+            {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
             <Button gradientDuoTone="purpleToPink" type="submit">
               Sign Up

@@ -1,12 +1,7 @@
 import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
-import {
-  HiArrowSmLeft,
-  HiDocumentSearch,
-  HiHome,
-  HiUser,
-  HiViewBoards,
-} from "react-icons/hi";
+import { HiArrowSmLeft, HiHome, HiUser, HiViewBoards } from "react-icons/hi";
+import { TbMusicSearch } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 
 const DSideBar = ({ isOpen, toggleSidebar }) => {
@@ -53,7 +48,7 @@ const DSideBar = ({ isOpen, toggleSidebar }) => {
             <Link to="/dashboard?tab=search">
               <Sidebar.Item
                 active={tab === "search"}
-                icon={HiDocumentSearch}
+                icon={TbMusicSearch}
                 labelColor="dark"
                 as="div"
               >
